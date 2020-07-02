@@ -1,7 +1,6 @@
 function getRecipe(form){
 	//Number of recipes shown on the page
 	var maxRecipes = 9;
-	//var defClassName = "col-lg-3"
 	
 	//Definition of the url to make the request
 	var queryURL='https://api.edamam.com/search?&app_id=4d273d6a&app_key=e45844b3b77d94ea901c651c8498d663&q=';
@@ -26,72 +25,46 @@ function getRecipe(form){
 
 				card.className="col-lg-4 col-lg-offset-1 col-md-offset-1";
 				
-				/*Add the name of the recipe to the card*/
+				//Add the name of the recipe to the card
 				var spanTitle = getName(data, i);
 				//formatting
-				//spanTitle.className = defClassName;
 				spanTitle.style.textAlign = "center";
 				card.append(spanTitle);
-		        //--------------------------------------------------------------
+				
       			//Add the image
       			var img = document.createElement("img");
-      			//var cardImg = document.createElement("div");
       			img.src = data.hits[i].recipe.image;
       			
-      			//Add nutritional informations about the recipe
-				var energy = data.hits[i].recipe.calories
-			   // var numberservings = data.hits[i].recipe.yield
-			   //var carbs = data.hits[i].recipe.totalNutrients
-			   // var fat = data.hits[i].recipe.NutrientInfo[]
-
-  				var infEnergy = document.createElement("b");
-    			infEnergy.innerHTML = "Energy : " + energy + " Kcal"
-    			
-    			//infEnergy.style.position="absolute";
-  				infEnergy.style.top="10px"; 
-  				infEnergy.style.width="100px"; 
-  				infEnergy.style.height="0px";
-  				
-
-  				//infEnergy.style.visibility="hidden";
-
-  				//infEnergy.style.zindex="2";
-  				//infEnergy.style.fontsize="50%";
-    			
-
-    			//when the mouse is over the image
+				//when the mouse is over the image
 				img.addEventListener("mouseover", function( event ) {   
-  				// on met l'accent sur la cible de mouseover
-				
-  				event.target.style.filter = "grayscale(100%)";
-				
-  				//event.target.style.background-color: #008CBA;
-
-  				//document.getElementById("infEnergy").style.visibility = "visible";
-
-  				//var infcarbs = document.createElement("span");
-    			//infcarbs.innerHTML = "   carbs : " + carbs 
-    			//card.append(infcarbs);
+					event.target.style.filter = "grayscale(100%)";
   				})
 
 				// when the mouse is over the image
   				img.addEventListener("mouseout", function( event ) {   
-  				// on met l'accent sur la cible de mouseover
-				img.append(infEnergy);
-  				event.target.style.filter = "grayscale(0%)";})
-				
-
-				
-				//cardImg.append(img);
-				
-				//cardImg.className = defClassName;
+					event.target.style.filter = "grayscale(0%)";
+				})
+								
 				card.append(img);
-				//----------------------------------------------------------------------------------
+				
+				
+      			//Add nutritional informations about the recipe
+				var cardNutrition = document.createElement("div");
+				var energy = data.hits[i].recipe.calories
+				
+			    /*var numberservings = data.hits[i].recipe.yield
+			    var carbs = data.hits[i].recipe.totalNutrients
+			    var fat = data.hits[i].recipe.NutrientInfo[]*/
+
+  				var infEnergy = document.createElement("b");
+    			infEnergy.innerHTML = "Energy : " + energy + " Kcal"
+    	
+  				card.append(infEnergy);
+
 				
 				/*Button to see the full recipe on another website*/
 				var recipeLink = getRecipeLink(data, i);
 				//formatting
-				//recipeLink.className = defClassName;
 				recipeLink.style.top = "1px";
 				recipeLink.style.position= "center"
 				recipeLink.style.left = "1px";
@@ -99,7 +72,6 @@ function getRecipe(form){
 				card.append(recipeLink); 					
 
 				/*Add the ingredients of the recipe to the card*/
-				//-----------------------------------------accordion
 				card.append(getIngredients(data, i));
 	
 				/*Show the results in the HMTL page*/
@@ -107,9 +79,6 @@ function getRecipe(form){
 		    }
 		})
   .catch(error => alert("Erreur : " + error));
-  
-  //Reset the search bar once the request is made
-	document.getElementById('food').value = "";
 }
 
 //Return the name of the recipe
